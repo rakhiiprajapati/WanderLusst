@@ -1,20 +1,27 @@
-const Joi = require("joi");
+const mongoose=require("mongoose");
+const Schema=mongoose.Schema;
 
-const listingSchema = Joi.object({
-  title: Joi.string().required(),
-  description: Joi.string().required(),
-  location: Joi.string().required(),
-  country: Joi.string().required(),
-  price: Joi.number().min(100).required(),
-  image: Joi.object({
-    url: Joi.string().uri().required(), 
-    filename: Joi.string().required(), 
-  }).required(), 
-});
+const reviewSchema= new Schema({
+    
+    rating:{
+        type:Number,
+        min:1,
+        max:5,
+       
+    },
+    comment:{
+        type:String,
+        required:true,
+     },
+    created_at:{
+        type:Date,
+        default:Date.now()
+    },
+    author:{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    },
+})
 
-const reviewSchema = Joi.object({
-  rating: Joi.number().min(1).max(5).required(),
-  comment: Joi.string().required(),
-});
-
-module.exports = { listingSchema, reviewSchema };
+const Review=mongoose.model("Review",reviewSchema);
+module.exports=Review

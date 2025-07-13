@@ -11,15 +11,8 @@ const listingSchema = new Schema({
     type: String
   },
   image: {
-    url: {
-      type: String,
-      default:
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-      set: (v) =>
-        v === ""
-          ? "https://unsplash.com/photos/a-sunflower-in-a-field-of-green-leaves-Wdz8MQ_eSA4"
-          : v,
-    },
+      url:String,
+      filename:String,
   },
   price: {
     type: Number
@@ -33,7 +26,12 @@ const listingSchema = new Schema({
   reviews: [{ 
     type: Schema.Types.ObjectId, 
     ref: "Review" 
-  }] // Reviews field to store review references
+  }
+],// Reviews field to store review references
+  owner:{
+    type:Schema.Types.ObjectId,
+    ref:"User",
+  },
 });
 
 
